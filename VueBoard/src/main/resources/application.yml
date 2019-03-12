@@ -1,0 +1,46 @@
+spring:
+  profiles:
+    active: local
+---
+server:
+  port: 8081
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc.lob.non_contextual_creation: true
+        use_sql_comments: true
+  devtools:
+    livereload:
+      enabled: true
+  output:
+    ansi:
+      enabled: always
+  http:
+    log-request-details: true
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+      #force-request: true
+      #force-response: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
+logging:
+  level:
+    root: warn
+    org.springframework.web: debug
