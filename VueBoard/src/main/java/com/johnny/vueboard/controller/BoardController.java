@@ -16,14 +16,28 @@ public class BoardController {
 
 	private BoardService boardService;
 
-	@GetMapping("/list")
-	public Map<String, Object> list() {
-		return boardService.selectAllBoard();
+	@GetMapping("/list/{pageNo}")
+	public Map<String, Object> list(@PathVariable int pageNo) {
+		return boardService.selectAllBoard(pageNo);
 	}
-
 
 	@PostMapping("/write")
 	public Map<String, Object> write(@RequestBody Board board) {
 		return boardService.insertBoard(board);
+	}
+	
+	@GetMapping("/content/{id}")
+	public Map<String, Object> content(@PathVariable Long id) {
+		return boardService.selectOneBoard(id);
+	}
+	
+	@PostMapping("/modify")
+	public Map<String, Object> modify(@RequestBody Board board) {
+		return boardService.updateBoard(board);
+	}
+	
+	@PostMapping("/delete")
+	public Map<String, Object> delete(@RequestBody Board board) {
+		return boardService.deleteBoard(board);
 	}
 }

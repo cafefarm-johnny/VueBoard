@@ -13,37 +13,65 @@
                     <p>작성일</p>
                 </div>
                 <div class="tb-body">
-                    <div class="tb-row">
-                        <p>1</p>
-                        <p>테스트용 글</p>
-                        <p>쟌쟌쟈니</p>
-                        <p>2017-05-06</p>
+                    <div class="tb-row" v-for="(item) in boardList" :key="item.id">
+                        <p>{{ item.id }}</p>
+                        <p><a @click="enterContent(item.id)">{{ item.title }}</a></p>
+                        <p>{{ item.userName }}</p>
+                        <p>{{ item.modifyDate }}</p>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="paging-box">
+            <Paging></Paging>
         </div>
     </div>
 </template>
 
 <script>
+import Paging from '../paging/Paging';
 import axios from 'axios';
 
 export default {
+    components: {
+        'Paging': Paging
+    },
     data() {
         return {
-            list: ''
+            list: '',
+            boardList: ''
         }
     },
+    created() {
+        this.fetchData(0)
+        this.$bus.$on('movePage', (pageNo) => {
+            this.fetchData(pageNo)
+        })
+    },
+    watch: {
+        '$route': 'fetchData',
+    },
     methods: {
-        getList() {
-            axios.get('/api/list')
+        fetchData(pageNo) {
+            axios.get('/api/list/' + pageNo)
                 .then((res) => {
-                    console.log(res)
+                    this.boardList = res.data.list.content
+
+                    // Vuex Store에 페이징 정보 설정
+                    this.$store.commit('pageFlush', {
+                        pageNumber: res.data.list.number,
+                        pageSize: res.data.list.size,
+                        totalPages: res.data.list.totalPages,
+                        totalElements: res.data.list.totalElements
+                    })
                 })
                 .catch((err) => {
                     window.alert(err)
                     console.log(err)
                 })
+        },
+        enterContent(boardId) {
+            this.$router.push('/content/' + boardId)
         }
     }
 }
@@ -55,8 +83,8 @@ export default {
         margin: 0 auto;
         padding-top: 3%;
         padding-left: 10%;
+        padding-right: 10%;
         height: 900px;
-        width: 50%;
         background-color: white;
         box-shadow: 3px 3px 3px 3px #d0d0d0;
     }
@@ -64,7 +92,6 @@ export default {
         padding-bottom: 5%;
     }
     .body-btn-box {
-        padding-right: 15%;
         text-align: right;
     }
     .body-btn-box button {
@@ -76,25 +103,21 @@ export default {
         color: white;
     }
     .tb-header {
-        width: 85%;
         border-bottom: solid 1px black;
-    }
-    .tb-body {
-        width: 85%;
     }
     .tb-row {
         border-bottom: solid 1px #d0d0d0;
     }
-    p {
+    .tb p {
         display: inline-block;
     }
-    p:nth-child(1) {
+    .tb p:nth-child(1) {
         width: 10%;
     }
-    p:nth-child(2) {
-        width: 45%;
+    .tb p:nth-child(2) {
+        width: 60%;
     }
-    p:nth-child(3) {
+    .tb p:nth-child(3) {
         width: 15%;
     }
 </style>

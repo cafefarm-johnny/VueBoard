@@ -81,7 +81,6 @@ export default {
         padding-top: 4%;
         padding-left: 10%;
         height: 400px;
-        width: 50%;
         background-color: white;
         box-shadow: 3px 3px 3px 3px #d0d0d0;
     }

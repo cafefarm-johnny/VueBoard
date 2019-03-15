@@ -4,10 +4,12 @@ import Body from '../components/layout/body/Body';
 import Join from '../components/join/Join';
 import Login from '../components/login/Login';
 import Write from '../components/board/Write';
+import Content from '../components/board/Content';
+import Modify from '../components/board/Modify';
 
-Vue.use(Router)
+Vue.use(Router);
 
-export default new Router({
+export const router = new Router({
   mode: 'history',
   routes: [
     {
@@ -24,7 +26,37 @@ export default new Router({
     },
     {
       path: '/write',
-      component: Write
+      component: Write,
+      // 라우트 가드
+      beforeEnter: (to, from, next) => {
+        if (sessionStorage.getItem('loginFlag') === 'false')
+        {
+          window.alert('로그인 후 이용해주시기 바랍니다.');
+        }
+        else
+        {
+          next();
+        }
+      }
+    },
+    {
+      path: '/content/:id',
+      component: Content
+    },
+    {
+      path: '/modify/:id',
+      component: Modify,
+      // 라우트 가드
+      beforeEnter: (to, from, next) => {
+        if (sessionStorage.getItem('loginFlag') === 'false')
+        {
+          window.alert('로그인 후 이용해주시기 바랍니다.');
+        }
+        else
+        {
+          next();
+        }
+      }
     }
   ]
-})
+});

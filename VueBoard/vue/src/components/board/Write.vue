@@ -66,8 +66,8 @@ export default {
         margin: 0 auto;
         padding-top: 3%;
         padding-left: 10%;
+        padding-right: 10%;
         height: 900px;
-        width: 50%;
         background-color: white;
         box-shadow: 3px 3px 3px 3px #d0d0d0;
     }
@@ -80,7 +80,7 @@ export default {
     .write-title-box input {
         padding-left: 4%;
         height: 30px;
-        width: 85%;
+        width: 100%;
         border-style: none;
         border-bottom: solid 1px #a8a8a8;
         outline: none;
@@ -89,14 +89,13 @@ export default {
         padding-top: 5%;
         padding-left: 4%;
         height: 500px;
-        width: 85%;
+        width: 100%;
         border-style: none;
         border-top: solid 1px #a8a8a8;
         border-bottom: solid 1px #a8a8a8;
         outline: none;
     }
     .write-btn-box {
-        padding-right: 8%;
         text-align: right;
     }
     .write-btn-box button {

@@ -9,4 +9,5 @@ import com.johnny.vueboard.Entity.UserInfo;
 public interface JoinRepository extends JpaRepository<UserInfo, Long> {
 	
 	Optional<UserInfo> findByUserId(String userId);
+	Optional<UserInfo> findByUserName(String userName);
 }

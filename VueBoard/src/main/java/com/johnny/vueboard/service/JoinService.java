@@ -22,20 +22,29 @@ public class JoinService {
 		
 		try 
 		{
-			Optional<UserInfo> otherUser = joinRepo.findByUserId(userInfo.getUserId());
-			if (otherUser.isPresent())
+			Optional<UserInfo> usingId = joinRepo.findByUserId(userInfo.getUserId());
+			if (usingId.isPresent())
 			{
 				returnMap.put("result", -2);
-				returnMap.put("msg", "이미 사용 중인 아이디입니다. 다른 아이디를 사용해주세요.");
+				returnMap.put("msg", "이미 가입된 사용자입니다. 다른 아이디를 사용해주세요.");
 			}
 			else
 			{
-				Long id = joinRepo.save(userInfo).getId();
-				
-				if (id > 0)
+				Optional<UserInfo> usingName = joinRepo.findByUserName(userInfo.getUserName());
+				if (usingName.isPresent())
 				{
-					returnMap.put("result", 1);
-					returnMap.put("msg", "회원가입이 완료되었습니다. 축하합니다.");
+					returnMap.put("result", -3);
+					returnMap.put("msg", "이미 가입된 사용자입니다. 다른 이름을 사용해주세요.");
+				}
+				else
+				{
+					Long id = joinRepo.save(userInfo).getId();
+
+					if (id > 0)
+					{
+						returnMap.put("result", 1);
+						returnMap.put("msg", "회원가입이 완료되었습니다. 축하합니다.");
+					}
 				}
 			}
 		} 

@@ -34,6 +34,7 @@ export default {
                 {
                     this.$store.commit('logoutFlush')
                     window.alert('다시 만나요... \n꼭이요...')
+                    this.$router.replace('/')
                 }
             }
         }
