@@ -29,7 +29,8 @@ export const router = new Router({
       component: Write,
       // 라우트 가드
       beforeEnter: (to, from, next) => {
-        if (sessionStorage.getItem('loginFlag') === 'false')
+        let loginFlag = sessionStorage.getItem('loginFlag') === null ? false : (sessionStorage.getItem('loginFlag') === 'true');
+        if (loginFlag === false)
         {
           window.alert('로그인 후 이용해주시기 바랍니다.');
         }
@@ -48,7 +49,8 @@ export const router = new Router({
       component: Modify,
       // 라우트 가드
       beforeEnter: (to, from, next) => {
-        if (sessionStorage.getItem('loginFlag') === 'false')
+        let loginFlag = sessionStorage.getItem('loginFlag') === null ? false : (sessionStorage.getItem('loginFlag') === 'true');
+        if (loginFlag === false)
         {
           window.alert('로그인 후 이용해주시기 바랍니다.');
         }
